@@ -1,0 +1,37 @@
+[ERROR] setUpvalue failed with error: missing argument #3
+[ERROR] setConstant failed with error: missing argument #3
+[SUCCESS] getLoadedModules executed successfully. Result: table: 0x0b2eda24199d1ab4
+[SUCCESS] hookFunction executed successfully. Result: function: 0x3f08d24b502fb7b4
+[ERROR] setContext failed with error: Invalid argument for setidentity
+[SUCCESS] getGc executed successfully. Result: table: 0xb61e1f68607231c4
+[SUCCESS] getContext executed successfully. Result: 8
+[ERROR] getInfo failed with error: missing argument #2
+[SUCCESS] getCallingScript executed successfully. Result: s6aZ9ZK9vt7HdU77A5lI
+[ERROR] isLClosure failed with error: missing argument #1
+[ERROR] getStack failed with error: Invalid argument for getstack.
+[ERROR] getProto failed with error: missing argument #2
+[ERROR] getConstant failed with error: missing argument #2
+[ERROR] isXClosure failed with error: missing argument #1
+[ERROR] getProtos failed with error: missing argument #1
+[SUCCESS] writeFile executed successfully. Result: nil
+[SUCCESS] getNamecallMethod executed successfully. Result: IsA
+[SUCCESS] setReadOnly executed successfully. Result: nil
+[ERROR] isFolder failed with error: missing argument #1
+[ERROR] setStack failed with error: missing argument #3
+[ERROR] hookMetaMethod failed with error: Script Raptor.Thread:312: attempt to index nil with function
+[ERROR] getConstants failed with error: missing argument #1
+[ERROR] getMetatable failed with error: missing argument #1
+[SUCCESS] getMenv executed successfully. Result: nil
+[SUCCESS] checkCaller executed successfully. Result: true
+[SUCCESS] getSenv executed successfully. Result: nil
+[ERROR] isReadOnly failed with error: missing argument #1
+[ERROR] getScriptClosure failed with error: Script Raptor.Thread:730: argument of type Instance expected.
+[ERROR] isFile failed with error: missing argument #1
+[SUCCESS] makeFolder executed successfully. Result: nil
+[ERROR] readFile failed with error: The requested file does not exist.
+[ERROR] setClipboard failed with error: Invalid argument for setclipboard
+[SUCCESS] getHui executed successfully. Result: CoreGui
+[ERROR] getUpvalues failed with error: missing argument #1
+[ERROR] getUpvalue failed with error: missing argument #2
+[ERROR] getConnections failed with error: Script Raptor.Thread:334: attempt to index nil with 'Connect'
+[SUCCESS] newCClosure executed successfully. Result: function: 0x37d2d6f2bbb18234
