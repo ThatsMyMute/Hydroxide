@@ -2,12 +2,12 @@ local LocalScript = {}
 
 function LocalScript.new(instance)
     local localScript = {}
-    local closure = getScriptClosure(instance)
+    local closure = getscriptclosure(instance)
 
     localScript.Instance = instance
     localScript.Environment = getsenv(instance)
-    localScript.Constants = getConstants(closure)
-    localScript.Protos = getProtos(closure)
+    localScript.Constants = getconstants(closure)
+    localScript.Protos = getprotos(closure)
 
     return localScript
 end
