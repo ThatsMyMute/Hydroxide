@@ -5,7 +5,7 @@ function LocalScript.new(instance)
     local closure = getScriptClosure(instance)
 
     localScript.Instance = instance
-    localScript.Environment = getSenv(instance)
+    localScript.Environment = getsenv(instance)
     localScript.Constants = getConstants(closure)
     localScript.Protos = getProtos(closure)
 
