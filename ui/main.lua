@@ -34,7 +34,7 @@ end, function(err)
 	end
 
 	MessageBox.Show("An error has occurred", message, MessageType.OK, function()
-		Interface:Destroy() 
+		warn(message)
 	end)
 end)
 
