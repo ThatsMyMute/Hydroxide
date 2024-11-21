@@ -10,7 +10,7 @@ local requiredMethods = {
     ["isXClosure"] = true
 }
 
-local function scan(query)
+local function Scan(query)
     local scripts = {}
     query = query or ""
 
