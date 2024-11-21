@@ -4,7 +4,7 @@ if oh then
     oh.Exit()
 end
 
-local web = false -- // Attempt at quick fix
+local web = true -- // Changed back
 local user = "ThatsMyMute" -- change if you're using a fork
 local branch = "revision"
 local importCache = {}
