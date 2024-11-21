@@ -9,7 +9,7 @@ local requiredMethods = {
     ["getLoadedModules"] = true
 }
 
-local function scan(query)
+local function Scan(query)
     local modules = {}
     query = query or ""
     
