@@ -2,50 +2,73 @@ local UpvalueScanner = {}
 local Closure = import("objects/Closure")
 local Upvalue = import("objects/Upvalue")
 
--- Improved UpvalueScanner Scan
+local requiredMethods = {
+    ["getGc"] = true,
+    ["getInfo"] = true,
+    ["isXClosure"] = true,
+    ["getUpvalue"] = true,
+    ["setUpvalue"] = true,
+    ["getUpvalues"] = true
+}
+
+local function compareUpvalue(query, upvalue, ignore)
+    local upvalueType = type(upvalue)
+
+    local stringCheck = upvalueType == "string" and (query == upvalue or upvalue:lower():find(query:lower()))
+    local numberCheck = not ignore and upvalueType == "number" and not isTableIndex and (tonumber(query) == upvalue or ("%.2f"):format(upvalue) == query)
+    
+    if upvalueType == "userdata" then
+        if typeof(upvalueType) == "Instance" then
+            local instanceName = upvalue.Name
+            return (instanceName == query or instanceName:find(query))
+        end
+
+        return toString(upvalue) == query
+    elseif upvalueType == "function" then
+        local closureName = getInfo(upvalue).name or ''
+        return query == closureName or closureName:lower():find(query:lower())
+    end
+
+    return stringCheck or numberCheck or userDataCheck
+end
+
 local function scan(query, deepSearch)
     local upvalues = {}
-    print("[UpvalueScanner] Starting scan for query:", query)
 
     for _i, closure in pairs(getGc()) do
         if type(closure) == "function" and not isXClosure(closure) and not upvalues[closure] then
-            -- Let's get the upvalues for this closure
-            local upvalueList = getUpvalues(closure)
-            if not upvalueList then
-                print("[UpvalueScanner] Failed to get upvalues for closure:", closure)
-                continue
-            end
-
-            for index, value in pairs(upvalueList) do
+            for index, value in pairs(getUpvalues(closure)) do
                 local valueType = type(value)
 
-                -- Check if the value matches the query
                 if valueType ~= "table" and compareUpvalue(query, value) then
-                    if not upvalues[closure] then
+                    local storage = upvalues[closure]
+
+                    if not storage then
                         local newClosure = Closure.new(closure)
                         newClosure.Upvalues[index] = Upvalue.new(newClosure, index, value)
                         upvalues[closure] = newClosure
                     else
-                        upvalues[closure].Upvalues[index] = Upvalue.new(upvalues[closure], index, value)
+                        storage.Upvalues[index] = Upvalue.new(storage, index, value)
                     end
-                    print("[UpvalueScanner] Match found in closure:", closure, "at index:", index)
                 elseif deepSearch and valueType == "table" then
-                    -- Deep searching into table values
+                    local storage = upvalues[closure]
+                    local table
+
                     for i, v in pairs(value) do
                         if (i ~= value and v ~= value) and (compareUpvalue(query, i, true) or compareUpvalue(query, v)) then
-                            if not upvalues[closure] then
+                            if not storage then
                                 local newClosure = Closure.new(closure)
+                                storage = newClosure
                                 upvalues[closure] = newClosure
                             end
 
-                            if not upvalues[closure].Upvalues[index] then
-                                local newUpvalue = Upvalue.new(upvalues[closure], index, value)
-                                newUpvalue.Scanned = {}
-                                upvalues[closure].Upvalues[index] = newUpvalue
+                            if not table then
+                                table = Upvalue.new(storage, index, value)
+                                table.Scanned = {}
+                                storage.Upvalues[index] = table
                             end
 
-                            upvalues[closure].Upvalues[index].Scanned[i] = v
-                            print("[UpvalueScanner] Deep search match found for closure:", closure, "in table index:", i)
+                            table.Scanned[i] = v
                         end
                     end
                 end
@@ -57,5 +80,5 @@ local function scan(query, deepSearch)
 end
 
 UpvalueScanner.Scan = scan
-
+UpvalueScanner.RequiredMethods = requiredMethods
 return UpvalueScanner
